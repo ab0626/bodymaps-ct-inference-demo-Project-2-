@@ -129,7 +129,7 @@ These players use **stable raw URLs** so they work when viewing this README on *
 
 **Fork / rename repo?** Update the `raw.githubusercontent.com/.../main/media/...` URLs above (or swap them back to `./media/demo-ui.mp4` if your Markdown viewer renders relative paths.)
 
-Replace clips under **`media/`** when you re-record. Very large uploads may belong in [Git LFS](https://git-lfs.com/) or off-site hosting.
+Replace clips under **`media/`** when you re-record. The committed demos use **moderate compression (scaled width + AAC audio)** so they stay small enough for GitHub’s README `<video>` players and the repo file viewer. For archival or 4K source, prefer [Git LFS](https://git-lfs.com/) or external hosting.
 
 **Presenter script:** see **`DEMO_SCRIPT.md`**.
 
