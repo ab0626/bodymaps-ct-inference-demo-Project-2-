@@ -1,0 +1,12 @@
+data/
+.cache/
+__pycache__/
+*.pyc
+.python-version
+.env
+.venv/
+venv/
+.pytest_cache/
+# Local SuPreM container (multi‑GB) — use HF / Docker instead; see README
+*.sif
+suprem_final.sif

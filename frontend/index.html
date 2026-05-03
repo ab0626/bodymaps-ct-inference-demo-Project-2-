@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuPreM — CT segmentation demo</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <aside id="mode-banner" class="mode-banner hidden" aria-label="Inference mode"></aside>
+
+      <header class="hero">
+        <p class="eyebrow">BodyMaps demo · SuPreM</p>
+        <h1>CT abdomen segmentation</h1>
+        <p class="lede">
+          Upload anonymized abdominal CT (<code>.nii</code>, <code>.nii.gz</code>, or BodyMaps-style ZIP).
+          Choose a registered model runner (mock vs SuPreM Docker/Singularity), then optionally attach a reference
+          mask ZIP to compute <strong>Dice</strong> per structure—useful for model evaluation on held-out masks.
+          SuPreM: <a href="https://huggingface.co/qicq1c/SuPreM">Hugging Face</a>; flow inspired by
+          <a href="https://totalsegmentator.com/">TotalSegmentator</a>.
+        </p>
+      </header>
+
+      <details class="card accordion">
+        <summary>Requirements · mock vs Docker</summary>
+        <div class="accordion-body">
+          <ul class="checks">
+            <li>Single study per upload · default cap 320&nbsp;MB (<code>SUPREM_MAX_UPLOAD_MB</code>).</li>
+            <li>
+              Real inference: NVIDIA GPU and Docker Desktop (Linux engine); image
+              <code>qchen99/suprem:v1</code>. See README for one-shot <code>scripts/suprem-docker-once.ps1</code>.
+            </li>
+            <li>
+              Screen-demo mode: set <code>SUPREM_INFERENCE_MODE=mock</code>. UI banner shows MOCK (tiny fast outputs).
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <section class="card upload-card">
+        <h2>Process data</h2>
+        <form id="upload-form">
+          <label class="field">
+            <span>Model</span>
+            <select id="model-select" name="model_id" aria-label="Inference model"></select>
+            <span class="field-hint muted small">Listed by <code>GET /api/models</code> · per-job overrides server default.</span>
+          </label>
+          <label class="field">
+            <span>Optional case folder name</span>
+            <input type="text" id="case-name" name="case_name" placeholder="BDMAP_00000338" />
+          </label>
+          <label class="field">
+            <span>Reference masks (optional ZIP)</span>
+            <input type="file" id="reference-input" name="reference" accept=".zip,application/zip" />
+            <span class="field-hint muted small">
+              BodyMaps layout: contains <code>…/segmentations/*.nii.gz</code> on the <strong>same grid</strong> as predictions.
+            </span>
+          </label>
+          <label class="drop-zone" id="drop-zone">
+            <input type="file" id="file-input" name="file" accept=".zip,.nii,.gz" hidden required />
+            <span class="drop-title">Drag &amp; drop or click</span>
+            <span class="drop-hint">ZIP (with <code>ct.nii.gz</code>) · NIfTI · up to configured limit</span>
+          </label>
+          <button type="submit" class="primary" id="submit-btn">Upload &amp; run</button>
+        </form>
+        <div id="status-panel" class="status hidden" aria-live="polite">
+          <p id="status-text" class="status-text"></p>
+          <p id="job-id" class="job-id muted hidden"></p>
+          <div class="meter"><div id="meter-fill" class="meter-fill"></div></div>
+          <a id="download-link" class="download hidden" href="#">Download segmentation ZIP</a>
+          <div id="output-manifest" class="output-manifest hidden">
+            <h3 class="output-heading">Outputs in ZIP</h3>
+            <p class="muted small">After extracting, inspect <code>…/{case}/segmentations/*.nii.gz</code> and <code>combined_labels.nii.gz</code>.</p>
+            <ul id="output-list" class="output-list"></ul>
+          </div>
+
+          <div id="evaluation-panel" class="evaluation-panel hidden">
+            <h3 class="output-heading">Evaluation vs reference</h3>
+            <div id="evaluation-body" class="evaluation-body"></div>
+          </div>
+
+          <div id="late-eval-panel" class="late-eval hidden">
+            <h3 class="output-heading">Evaluate after run</h3>
+            <p class="muted small">Upload reference segmentations ZIP if you skipped it above.</p>
+            <div class="eval-row">
+              <input type="file" id="eval-zip" accept=".zip,application/zip" />
+              <button type="button" class="secondary" id="eval-btn">Compute Dice</button>
+            </div>
+            <p id="eval-msg" class="muted small hidden" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="disclaimer card">
+        <h2>Prototype disclaimer</h2>
+        <p>
+          Research demo only—not for diagnosis or clinical decisions. Respect IRB/ethics rules and anonymize PHI.
+          Cite SuPreM / BodyMaps mentors as requested in your submission. Model licensing follows the upstream
+          <a href="https://huggingface.co/qicq1c/SuPreM">SuPreM</a> artifact.
+        </p>
+      </footer>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
