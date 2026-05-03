@@ -9,7 +9,7 @@ Web app: upload abdominal **CT** (`zip` / `.nii.gz`), pick a **model runner** (m
 ## Contents
 
 - [How to run smoothly](#how-to-run-smoothly) — **start here**
-- [Demo videos](#demo-videos-submission-assets)
+- [Demo videos](#demo-videos)
 - [Repository layout](#repository-layout)
 - [Configuration (environment variables)](#configuration-environment-variables)
 - [Docker & Singularity (real inference)](#docker--singularity-real-inference)
@@ -101,27 +101,35 @@ python -m pytest tests -v
 
 ---
 
-## Demo videos (submission assets)
+## Demo videos
 
-### Files in `media/`
+These players use **stable raw URLs** so they work when viewing this README on **github.com**.  
+(Download links use the same files committed under [`media/`](./media/).)
 
-| File | What it shows |
-|------|----------------|
-| [`demo-ui.mp4`](./media/demo-ui.mp4) | Browser: upload → status → download |
-| [`demo-explorer.mp4`](./media/demo-explorer.mp4) | File Explorer: `BDMAP…`, `combined_labels`, `segmentations` |
+| Clip | Contents |
+|------|----------|
+| **Browser demo** | Upload → polling → download |
+| **Explorer demo** | Unzipped `BDMAP…`, `combined_labels`, `segmentations` |
 
-**Open in browser / editor**
+**Direct files:** [demo-ui.mp4](./media/demo-ui.mp4) · [demo-explorer.mp4](./media/demo-explorer.mp4)
 
-- [Browser workflow (MP4)](./media/demo-ui.mp4)
-- [Explorer — masks (MP4)](./media/demo-explorer.mp4)
+### 1 · Browser workflow
 
-**Inline playback** (if your Markdown host allows `<video>`):
+<video controls playsinline preload="metadata" width="100%" style="max-width: 720px;">
+  <source src="https://raw.githubusercontent.com/ab0626/bodymaps-ct-inference-demo-Project-2-/main/media/demo-ui.mp4" type="video/mp4" />
+  <p><a href="https://raw.githubusercontent.com/ab0626/bodymaps-ct-inference-demo-Project-2-/main/media/demo-ui.mp4">Open demo-ui.mp4</a></p>
+</video>
 
-<video src="./media/demo-ui.mp4" controls width="720"></video>
+### 2 · File Explorer (BDMAP outputs)
 
-<video src="./media/demo-explorer.mp4" controls width="720"></video>
+<video controls playsinline preload="metadata" width="100%" style="max-width: 720px;">
+  <source src="https://raw.githubusercontent.com/ab0626/bodymaps-ct-inference-demo-Project-2-/main/media/demo-explorer.mp4" type="video/mp4" />
+  <p><a href="https://raw.githubusercontent.com/ab0626/bodymaps-ct-inference-demo-Project-2-/main/media/demo-explorer.mp4">Open demo-explorer.mp4</a></p>
+</video>
 
-Replace these files under **`media/`** if you re-record. Very large files may be better on [Git LFS](https://git-lfs.com/) or an external host.
+**Fork / rename repo?** Update the `raw.githubusercontent.com/.../main/media/...` URLs above (or swap them back to `./media/demo-ui.mp4` if your Markdown viewer renders relative paths.)
+
+Replace clips under **`media/`** when you re-record. Very large uploads may belong in [Git LFS](https://git-lfs.com/) or off-site hosting.
 
 **Presenter script:** see **`DEMO_SCRIPT.md`**.
 
