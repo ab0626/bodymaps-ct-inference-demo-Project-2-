@@ -255,6 +255,38 @@ cd backend && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 ---
 
+## What this demo does especially well
+
+Compared with typical public demo workflows, this project emphasizes **demo reliability**, **reproducibility**, and a clear end-to-end experience:
+
+- **Reliable live demos:** `mock` mode demonstrates full upload -> run -> download flow without GPU risk.
+- **Same UI, multiple execution paths:** supports `mock`, Docker SuPreM, and Linux Singularity, so demo and real inference share one interface.
+- **Predictable outputs:** standardized BodyMaps/SuPreM-style output structure (`combined_labels` + per-organ `segmentations`).
+- **Built-in quality checks:** optional per-case Dice evaluation against reference masks.
+- **Operator-friendly workflow:** environment checks, scripted tests, and troubleshooting guidance reduce setup friction.
+
+---
+
+## Improvement roadmap (technical + non-technical)
+
+### Technical priorities
+
+- Add stronger background job queue/worker handling for higher concurrency and better fault tolerance.
+- Expose stage-based progress (`uploading`, `preprocess`, `inference`, `packaging`) for clearer runtime feedback.
+- Improve large-file upload robustness (chunked/resumable uploads, validation, checksum safeguards).
+- Expand observability (job latency, timeout/failure causes, resource usage) for performance tuning.
+- Tighten data lifecycle controls (retention windows, cleanup automation, safer artifact handling).
+
+### Non-technical priorities
+
+- Improve first-run onboarding (3-step quick start + sample input file).
+- Simplify UX copy for model/file selection and expected outputs.
+- Strengthen trust messaging (scope limitations, research-only disclaimer, data handling expectations).
+- Improve presentation readiness (short demo script + fallback path if real inference is unavailable).
+- Add FAQ-style support guidance for common user errors and setup issues.
+
+---
+
 ## Troubleshooting
 
 | Problem | What to do |
